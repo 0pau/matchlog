@@ -3,8 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Route::get('/', function (){
-    return view('main');
+Route::get('/', \App\Livewire\Main::class);
+
+Route::get('/competitors', \App\Livewire\ComptetitorList::class);
+Route::get('/competitions/{id}', \App\Livewire\CompetitionInfoPage::class);
+
+Route::any("{catchall}", function (){
+    return "A keresett elem nem található.";
 });
 
 /*

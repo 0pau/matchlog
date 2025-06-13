@@ -27,9 +27,9 @@ return new class extends Migration
                 $table->increments('id');
                 $table->string('name');
                 $table->date('date');
-                $table->unsignedInteger('comp_id');
+                $table->unsignedInteger('competition_id');
 
-                $table->foreign('comp_id')->references('id')->on('competitions')->cascadeOnDelete();
+                $table->foreign('competition_id')->references('id')->on('competitions')->cascadeOnDelete();
 
             });
         }
@@ -69,10 +69,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('part_of');
         Schema::dropIfExists('rounds');
         Schema::dropIfExists('competitions');
         Schema::dropIfExists('competitors');
-        Schema::dropIfExists('part_of');
         Schema::dropIfExists('users');
     }
 };
