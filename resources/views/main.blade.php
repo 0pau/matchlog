@@ -4,9 +4,8 @@
         <div class="col-md-10">
             <div class="d-flex justify-content-between hbar">
                 <h3>Versenyek</h3>
-                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#newCompetitionModal">
+                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#newCompetitionModal">
                     <i class="bi bi-plus"></i>
-                    Új verseny felvétele
                 </button>
             </div>
             <div class="d-grid gap-3">

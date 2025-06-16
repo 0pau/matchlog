@@ -1,6 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col"></div>
+        @if($competition !== null)
         <div class="col-md-10">
             <div class="d-flex justify-content-between hbar">
                 <h3> {{$competition->name." ".$competition->year}} </h3>
@@ -63,6 +64,11 @@
                 @endforelse
             </div>
         </div>
+        @else
+        <div class="col-md-10">
+            <livewire:no-data-view title="A kért verseny nem található." hint="Ez van.."/>
+        </div>
+        @endif
         <div class="col"></div>
     </div>
 </div>

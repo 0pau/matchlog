@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Competition;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -42,15 +43,14 @@ class Main extends Component
 
     #[Computed()]
     public function get_competitions() {
-        return Competition::all();
+        return Competition::orderBy('year', 'desc')
+            ->orderBy('name', 'asc')
+            ->get();
+        //return Competition::all();
     }
 
     public function render()
     {
         return view("main");
-    }
-
-    public function test() {
-        return "xddd";
     }
 }
