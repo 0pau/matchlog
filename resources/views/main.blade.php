@@ -12,7 +12,7 @@
                 @forelse($this->get_competitions() as $c)
                     <livewire:competition-card :comp="$c" :wire:key="$c->id"/>
                 @empty
-                    <p>Ez a lista üres</p>
+                    <livewire:no-data-view title="Nincsenek versenyek az adatbázisban"/>
                 @endforelse
             </div>
         </div>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" wire:click="save_new">Mentés</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" wire:click="$js.newCompetition">Mentés</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
                 </div>
             </div>
@@ -65,4 +65,15 @@
     </div>
 </div>
 
+@script
+<script>
+    $js('newCompetition', ()=>{
+        $wire.save_new().then(()=>{
+            showSnackBar("Sikeres mentés.", 2500);
+        }).catch(()=>{
+            showSnackBar("Hiba történt.", 2500);
+        });
+    })
+</script>
+@endscript
 

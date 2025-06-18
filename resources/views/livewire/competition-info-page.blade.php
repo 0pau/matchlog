@@ -36,12 +36,23 @@
             </table>
             <div class="d-flex justify-content-between hbar">
                 <h5>Fordulók</h5>
-                <button type="button" class="btn btn-light" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-plus"></i>
-                </button>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-light" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-sort-up"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item disabled">Rendezés</a></li>
+                        <li><a class="dropdown-item @if($roundSortColumn == 'name') active @endif" wire:click="setRoundSortColumn('name')">Név szerint</a></li>
+                        <li><a class="dropdown-item @if($roundSortColumn == 'date') active @endif" wire:click="setRoundSortColumn('date')">Dátum szerint</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="accordion" id="rounds">
-                @forelse($competition->rounds()->get() as $round)
+                <form wire:submit="$js.addRound" class="list-group-item d-flex gap-3">
+                    <input class="form-control flex-grow-1" placeholder="Új forduló neve" wire:model="newRoundName">
+                    <button class="btn btn-outline-dark"><i class="bi bi-plus"></i></button>
+                </form>
+                @forelse($competition->rounds()->orderBy($roundSortColumn)->get() as $round)
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="round_heading_{{$round->id}}">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#round_{{$round->id}}" aria-controls="round_{{$round->id}}">
@@ -50,17 +61,22 @@
                         </h2>
                         <div class="accordion-collapse collapse" id="round_{{$round->id}}" data-bs-parent="#rounds" aria-labelledby="round_heading_{{$round->id}}">
                             <div class="accordion-body">
-                                <p><strong>Dátum:</strong> {{ $round->date  }}</p>
+                                <p><strong>Dátum:</strong>
+                                    @if($round->date != null)
+                                        {{ $round->date  }}
+                                    @else
+                                        Nincs megadva
+                                    @endif
+                                </p>
                                 <p><strong>Versenyzők:</strong> Nincsenek versenyzők</p>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                                     <button type="button" class="btn btn-outline-primary">Szerkesztés</button>
-                                    <button type="button" class="btn btn-outline-primary">Törlés</button>
+                                    <button data-round-id="{{$round->id}}" type="button" class="btn btn-outline-primary" wire:click="$js.deleteRound($event)">Törlés</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <livewire:no-data-view title="Ehhez a versenyhez nincsenek fordulók rendelve." hint="Új fordulót a feljebb lévő hozzáadás gombbal rendelhet ehhez a versenyhez."/>
                 @endforelse
             </div>
         </div>
@@ -72,3 +88,25 @@
         <div class="col"></div>
     </div>
 </div>
+
+@script
+<script>
+
+    $js('addRound', ()=>{
+        if ($wire.newRoundName.trim() === "") {
+            showSnackBar("Adja meg az új forduló nevét!", 2500);
+            $wire.commit();
+            return;
+        }
+        $wire.addNewRound().then(()=>{
+           showSnackBar("Az új forduló sikeresen létre lett hozva.", 3000)
+        });
+    });
+
+    $js('deleteRound', (event)=>{
+        $wire.deleteRound(event.target.getAttribute("data-round-id")).then(()=>{
+            showSnackBar("A forduló törlésre került.", 3000);
+        });
+    });
+</script>
+@endscript

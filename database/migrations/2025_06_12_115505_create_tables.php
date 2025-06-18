@@ -26,7 +26,7 @@ return new class extends Migration
             Schema::create('rounds', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
-                $table->date('date');
+                $table->date('date')->nullable();
                 $table->unsignedInteger('competition_id');
 
                 $table->foreign('competition_id')->references('id')->on('competitions')->cascadeOnDelete();

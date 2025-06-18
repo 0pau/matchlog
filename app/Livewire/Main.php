@@ -29,7 +29,6 @@ class Main extends Component
     }
 
     public function save_new() {
-
         Competition::create([
             "name"=>$this->new_name,
             "year"=>$this->new_year,
@@ -38,7 +37,6 @@ class Main extends Component
             "p_empty"=>$this->new_p_empty,
             "p_incorrect"=>$this->new_p_incorrect
         ]);
-        //$this->get_competitions();
     }
 
     #[Computed()]

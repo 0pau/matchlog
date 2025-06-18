@@ -14,4 +14,19 @@
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <script>
+        function showSnackBar(message, timeout) {
+            let snackbar = document.createElement("div");
+            snackbar.className = "snackbar";
+            snackbar.innerHTML = message;
+            document.body.appendChild(snackbar);
+            setTimeout(()=>{
+                snackbar.style.animationName = "snackbar-hide";
+            },timeout-200);
+            setTimeout(()=>{
+                snackbar.remove();
+            },timeout)
+        }
+    </script>
 </head>
