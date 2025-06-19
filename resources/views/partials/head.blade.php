@@ -12,11 +12,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script>
         function showSnackBar(message, timeout) {
+            $(".snackbar").remove();
             let snackbar = document.createElement("div");
             snackbar.className = "snackbar";
             snackbar.innerHTML = message;

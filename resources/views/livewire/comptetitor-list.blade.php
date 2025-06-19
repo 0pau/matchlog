@@ -4,9 +4,11 @@
         <div class="col-md-10">
             <div class="d-flex justify-content-between hbar">
                 <h3>Versenyzők</h3>
+                @if(Auth::check() && Auth::user()->is_admin)
                 <button type="button" class="btn btn-light" wire:click="$js.show_dialog">
                     <i class="bi bi-plus"></i>
                 </button>
+                @endif
             </div>
 
             <div class="vstack gap-3">

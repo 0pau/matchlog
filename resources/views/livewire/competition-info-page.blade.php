@@ -5,6 +5,7 @@
         <div class="col-md-10">
             <div class="d-flex justify-content-between hbar">
                 <h3> {{$competition->name." ".$competition->year}} </h3>
+                @if(Auth::check() && Auth::user()->is_admin)
                 <div class="dropdown">
                     <button type="button" class="btn btn-light" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots"></i>
@@ -14,6 +15,7 @@
                         <li><a class="dropdown-item" wire:click="delete">Törlés</a></li>
                     </ul>
                 </div>
+                @endif
             </div>
             <h5>Alapvető információk</h5>
             <table class="table">
@@ -48,10 +50,12 @@
                 </div>
             </div>
             <div class="accordion" id="rounds">
+                @if(Auth::check() && Auth::user()->is_admin)
                 <form wire:submit="$js.addRound" class="list-group-item d-flex gap-3">
                     <input class="form-control flex-grow-1" placeholder="Új forduló neve" wire:model="newRoundName">
                     <button class="btn btn-outline-dark"><i class="bi bi-plus"></i></button>
                 </form>
+                @endif
                 @forelse($competition->rounds()->orderBy($roundSortColumn)->get() as $round)
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="round_heading_{{$round->id}}">
@@ -69,10 +73,12 @@
                                     @endif
                                 </p>
                                 <p><strong>Versenyzők:</strong> Nincsenek versenyzők</p>
+                                @if (Auth::check() && Auth::user()->is_admin)
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                                     <button type="button" class="btn btn-outline-primary">Szerkesztés</button>
                                     <button data-round-id="{{$round->id}}" type="button" class="btn btn-outline-primary" wire:click="$js.deleteRound($event)">Törlés</button>
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -82,7 +88,7 @@
         </div>
         @else
         <div class="col-md-10">
-            <livewire:no-data-view title="A kért verseny nem található." hint="Ez van.."/>
+            <livewire:no-data-view title="A kért verseny nem található."/>
         </div>
         @endif
         <div class="col"></div>

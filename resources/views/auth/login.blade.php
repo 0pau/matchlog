@@ -6,7 +6,7 @@
             @csrf
             <div class="vstack gap-3">
                 <img src="favicon.svg" class="login-logo">
-                <h4>Jelentkezz be</h4>
+                <h4>Jelentkezz be MatchLog fiókodba!</h4>
                 <label>
                     <span>Email-cím</span>
                     <input name="email" class="form-control">

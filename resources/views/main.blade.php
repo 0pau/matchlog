@@ -4,9 +4,11 @@
         <div class="col-md-10">
             <div class="d-flex justify-content-between hbar">
                 <h3>Versenyek</h3>
+                @if(Auth::check() && Auth::user()->is_admin)
                 <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#newCompetitionModal">
                     <i class="bi bi-plus"></i>
                 </button>
+                @endif
             </div>
             <div class="d-grid gap-3">
                 @forelse($this->get_competitions() as $c)

@@ -2,7 +2,6 @@
     <div class="container-xl">
         <a class="navbar-brand" href="/" wire:navigate>
             <img src="/favicon.svg" height="32px" width="32px" class="d-inline-block align-content-center">
-            MatchLog
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -21,7 +20,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ \Illuminate\Support\Facades\Auth::user()->email }}</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="logout">Kijelentkezés</a></li>
+                        <li><a class="dropdown-item" href="/logout">Kijelentkezés</a></li>
                     </ul>
                 </li>
             </ul>
