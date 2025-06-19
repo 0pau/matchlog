@@ -1,4 +1,24 @@
+.login-form {
+    padding: 15px;
+    margin-top: 30px;
+    min-width: 300px;
+}
 
+.user_icon {
+    background-color: var(--bs-blue);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+}
+
+.login-logo {
+    width: 45px;
+    height: 45px;
+}
 
 .hbar {
     margin: 20px 0;

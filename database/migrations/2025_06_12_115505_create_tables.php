@@ -54,9 +54,9 @@ return new class extends Migration
             Schema::create('users', function (Blueprint $table) {
                 $table->string('email');
                 $table->string('password');
-                $table->string('phone_number');
-                $table->string('address');
-                $table->boolean('is_admin');
+                $table->string('phone_number')->nullable();
+                $table->string('address')->nullable();
+                $table->boolean('is_admin')->default(false);
 
                 $table->primary('email');
             });

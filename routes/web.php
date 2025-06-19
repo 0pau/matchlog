@@ -1,28 +1,25 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
 
-Route::get('/', \App\Livewire\Main::class);
+Route::get('/login', function (){
+    return view("auth.login");
+})->name('login');
 
-Route::get('/competitors', \App\Livewire\ComptetitorList::class);
-Route::get('/competitions/{id}', \App\Livewire\CompetitionInfoPage::class);
+Route::middleware('auth')->group(function (){
+    Route::get('/', \App\Livewire\Main::class);
+    Route::get('/competitors', \App\Livewire\ComptetitorList::class);
+    Route::get('/competitions/{id}', \App\Livewire\CompetitionInfoPage::class);
+});
+
+Route::post('/login', [\App\Http\Controllers\Auth\AuthController::class, 'authenticate']);
+
+Route::get('/register', function(){
+    return view("auth.register");
+});
+Route::post('/register', [\App\Http\Controllers\Auth\AuthController::class, 'register']);
+Route::get('/logout', [\App\Http\Controllers\Auth\AuthController::class, 'logout']);
 
 Route::any("{catchall}", function (){
     return "A keresett elem nem található.";
 });
-
-/*
-Route::view('dashboard', 'dashboxard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
-Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
-
-    Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
-    Volt::route('settings/password', 'settings.password')->name('settings.password');
-    Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
-});*/
-
-require __DIR__.'/auth.php';
