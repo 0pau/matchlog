@@ -21,5 +21,5 @@ Route::post('/register', [\App\Http\Controllers\Auth\AuthController::class, 'reg
 Route::get('/logout', [\App\Http\Controllers\Auth\AuthController::class, 'logout']);
 
 Route::any("{catchall}", function (){
-    return "A keresett elem nem található.";
+    return view("not-found");
 });
