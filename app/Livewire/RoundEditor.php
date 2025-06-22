@@ -35,10 +35,13 @@ class RoundEditor extends Component
 
     public function save()
     {
+        $new_name = $this->name;
+        $new_date = $this->date;
+        $id = $this->value;
         $this->round = null;
         $this->value = -1;
-        Round::where('id', $this->value)->update(
-            ["name"=>$this->name, "date"=>$this->date]
+        Round::find($id)->update(
+            ["name"=>$new_name, "date"=>$new_date]
         );
         $this->dispatch("roundEditDone");
     }
