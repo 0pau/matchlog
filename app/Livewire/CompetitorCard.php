@@ -7,11 +7,16 @@ use Livewire\Component;
 class CompetitorCard extends Component
 {
 
-    public $isBeingEdited = false;
-
     public $competitor;
-    public function edit() {
-        $this->isBeingEdited = true;
+
+    protected $listeners = ["dataUpdated"=>'$refresh'];
+
+    public function delete() {
+        $this->competitor->delete();
+        $this->dispatch("competitorDeleted");
+    }
+    public function requestEdit() {
+        $this->dispatch("editRequested", id: $this->competitor->id);
     }
     public function render()
     {

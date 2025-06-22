@@ -5,15 +5,14 @@
             <div class="d-flex justify-content-between hbar">
                 <h3>Versenyzők</h3>
                 @if(Auth::check() && Auth::user()->is_admin)
-                <button type="button" class="btn btn-light" wire:click="$js.show_dialog">
+                <button type="button" class="btn btn-light" wire:click="add_new">
                     <i class="bi bi-plus"></i>
                 </button>
                 @endif
             </div>
 
             <div class="vstack gap-3">
-                @forelse($this->get_competitors() as $c)
-                    <!--<p >{{$c->name}} ({{$c->birth}}, {{$c->address}})</p>-->
+                @forelse(\App\Models\Competitor::query()->get() as $c)
                     <livewire:competitor-card :wire:key="$c->id" :competitor="$c"/>
                 @empty
                     <livewire:no-data-view hint="A fenti hozzáadás gomb megnyomásával új versenyzőt rögzíthet a rendszerben."/>
@@ -29,7 +28,11 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
+                    @if($editMode)
+                    <h5 class="modal-title" id="newCompetitionModalTitle">Adatok szerkesztése</h5>
+                    @else
                     <h5 class="modal-title" id="newCompetitionModalTitle">Új versenyző felvétele</h5>
+                    @endif
                 </div>
                 <div class="modal-body vstack gap-3">
                     <div class="d-flex container-fluid gap-3">
@@ -51,7 +54,7 @@
                         </label>
                     </div>
                     <div class="container-fluid">
-                        <p class="alert alert-danger" id="error">Error</p>
+                        <p wire:ignore class="alert alert-danger" id="error">Error</p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -66,10 +69,10 @@
 @script
 <script>
     $js('show_dialog', ()=>{
+        document.getElementById("error").style.display = "none";
         var modal = new bootstrap.Modal(document.getElementById("newCompetitorModal"));
         modal.show();
-        document.getElementById("error").style.display = "none";
-    })
+    });
     $js('save', ()=>{
         $wire.save_new().then((result)=>{
             if (result === true) {
@@ -79,6 +82,6 @@
                 document.getElementById("error").innerText = result;
             }
         });
-    })
+    });
 </script>
 @endscript
