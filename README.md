@@ -12,6 +12,12 @@ A MatchLog egy egyszerű webes alkalmazás, amiben versenyeket lehet felvenni, a
     npm install
     npm run build
 ```
+- .env fájl elkészítése
+  - Az `.env.example` fájlban megtalálhatók az alapvető konfigurációs beállítások, melyeket ki kell egészíteni az adatbázisszerver adataival, majd átnevezni .env-re
+  - Ezután le kell generálni egy kulcsot a webalkalmazásnak:
+```sh
+  php artisan key:generate
+```
 - Adatbázis migrációja, seedelése
 ```sh
     php artisan migrate
@@ -21,4 +27,3 @@ A MatchLog egy egyszerű webes alkalmazás, amiben versenyeket lehet felvenni, a
 ```sh
     php artisan serve
 ```
-Az `.env.example` fájlban megtalálhatók az alapvető konfigurációs beállítások, melyeket ki kell egészíteni az adatbázisszerver adataival.
