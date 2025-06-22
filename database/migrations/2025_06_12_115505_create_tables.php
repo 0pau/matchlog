@@ -20,6 +20,8 @@ return new class extends Migration
                 $table->integer('p_correct');
                 $table->integer('p_incorrect');
                 $table->integer('p_empty');
+
+                $table->unique(["name", "year"]);
             });
         }
         if (!Schema::hasTable('rounds')) {
