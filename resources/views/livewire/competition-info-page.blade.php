@@ -55,8 +55,8 @@
                     <button class="btn btn-outline-dark"><i class="bi bi-plus"></i></button>
                 </form>
                 @endif
-                @forelse($rounds as $round)
-                    <div class="accordion-item">
+                @forelse($this->competition->rounds()->orderBy($this->roundSortColumn)->get() as $round)
+                    <div class="accordion-item" :wire:key="$round->id">
                         <h2 class="accordion-header" id="round_heading_{{$round->id}}">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#round_{{$round->id}}" aria-controls="round_{{$round->id}}">
                                 {{ $round->name }}
@@ -136,9 +136,10 @@
 
     $wire.on("roundEditDone", ()=>{
         bootstrap.Modal.getInstance(document.getElementById("editorModal")).hide();
+        $wire.$refresh();
         /*
         $wire.refreshRounds().then(()=>{
-            $wire.$refresh();
+
         });*/
     })
 </script>

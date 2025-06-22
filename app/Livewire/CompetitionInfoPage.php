@@ -15,7 +15,6 @@ class CompetitionInfoPage extends Component
     public $id=0;
     public $roundSortColumn = "name";
     public $editedRoundId = -1;
-    public $rounds = [];
 
     public function delete()
     {
@@ -24,8 +23,8 @@ class CompetitionInfoPage extends Component
     }
 
     public function deleteRound($round_id) {
-        Round::query()->where('id', $round_id)->delete();
-        $this->refreshRounds();
+        Round::where('id', $round_id)->delete();
+        //$this->refreshRounds();
     }
 
     public function addNewRound() {
@@ -34,13 +33,11 @@ class CompetitionInfoPage extends Component
             "competition_id"=>$this->id
         ]);
         $this->newRoundName = "";
-        $this->refreshRounds();
     }
 
     public function setRoundSortColumn(string $roundSortColumn): void
     {
         $this->roundSortColumn = $roundSortColumn;
-        $this->refreshRounds();
     }
 
     public function setEditedRoundId($newId)
@@ -48,17 +45,10 @@ class CompetitionInfoPage extends Component
         $this->editedRoundId = $newId;
     }
 
-    public function refreshRounds() {
-        $this->rounds = $this->competition->rounds()->orderBy($this->roundSortColumn)->get();
-    }
-
     public function mount($id)
     {
         $this->id = $id;
         $this->competition = Competition::find($id);
-        if ($this->competition != null) {
-            $this->refreshRounds();
-        }
     }
 
     public function render()

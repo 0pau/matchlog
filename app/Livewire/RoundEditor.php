@@ -22,8 +22,10 @@ class RoundEditor extends Component
     {
         if ($this->value != -1) {
             $this->round = Round::find($this->value);
-            $this->name = $this->round->name;
-            $this->date = $this->round->date;
+            if ($this->round != null) {
+                $this->name = $this->round->name;
+                $this->date = $this->round->date;
+            }
         }
     }
 
@@ -33,6 +35,8 @@ class RoundEditor extends Component
 
     public function save()
     {
+        $this->round = null;
+        $this->value = -1;
         Round::where('id', $this->value)->update(
             ["name"=>$this->name, "date"=>$this->date]
         );
