@@ -17,9 +17,9 @@ return new class extends Migration
                 $table->string('name');
                 $table->integer('year');
                 $table->string('theme');
-                $table->integer('p_correct');
-                $table->integer('p_incorrect');
-                $table->integer('p_empty');
+                $table->integer('p_correct')->default(1);
+                $table->integer('p_incorrect')->default(0);
+                $table->integer('p_empty')->default(0);
 
                 $table->unique(["name", "year"]);
             });
