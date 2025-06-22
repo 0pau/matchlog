@@ -12,7 +12,7 @@
             </div>
 
             <div class="vstack gap-3">
-                @forelse(\App\Models\Competitor::query()->get() as $c)
+                @forelse(\App\Models\Competitor::query()->orderBy("name")->get() as $c)
                     <livewire:competitor-card :wire:key="$c->id" :competitor="$c"/>
                 @empty
                     <livewire:no-data-view hint="A fenti hozzáadás gomb megnyomásával új versenyzőt rögzíthet a rendszerben."/>
