@@ -56,7 +56,7 @@
                     <button class="btn btn-outline-dark"><i class="bi bi-plus"></i></button>
                 </form>
                 @endif
-                @forelse($competition->rounds()->orderBy($roundSortColumn)->get() as $round)
+                @forelse($rounds as $round)
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="round_heading_{{$round->id}}">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#round_{{$round->id}}" aria-controls="round_{{$round->id}}">
@@ -72,10 +72,17 @@
                                         Nincs megadva
                                     @endif
                                 </p>
-                                <p><strong>Versenyzők:</strong> Nincsenek versenyzők</p>
+                                <p>
+                                    <strong>Versenyzők:</strong>
+                                    @if ($round->competitors()->count()!=0)
+                                        {{ $round->getCompetitorListString() }}
+                                    @else
+                                        Nincsenek versenyzők
+                                    @endif
+                                </p>
                                 @if (Auth::check() && Auth::user()->is_admin)
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-outline-primary">Szerkesztés</button>
+                                    <button data-round-id="{{$round->id}}" type="button" class="btn btn-outline-primary" wire:click="$js.showEditorModal($event)">Szerkesztés</button>
                                     <button data-round-id="{{$round->id}}" type="button" class="btn btn-outline-primary" wire:click="$js.deleteRound($event)">Törlés</button>
                                 </div>
                                 @endif
@@ -93,6 +100,13 @@
         @endif
         <div class="col"></div>
     </div>
+
+    <div class="modal fade" id="editorModal">
+        <div class="modal-dialog modal-lg">
+            <livewire:round-editor wire:model="editedRoundId"/>
+        </div>
+    </div>
+
 </div>
 
 @script
@@ -114,5 +128,19 @@
             showSnackBar("A forduló törlésre került.", 3000);
         });
     });
+
+    $js("showEditorModal", (event)=>{
+        $wire.setEditedRoundId(event.target.getAttribute("data-round-id")).then(()=>{
+            (new bootstrap.Modal(document.getElementById("editorModal"))).show();
+        });
+    });
+
+    $wire.on("roundEditDone", ()=>{
+        bootstrap.Modal.getInstance(document.getElementById("editorModal")).hide();
+        /*
+        $wire.refreshRounds().then(()=>{
+            $wire.$refresh();
+        });*/
+    })
 </script>
 @endscript
