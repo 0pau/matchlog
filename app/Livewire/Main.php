@@ -29,14 +29,20 @@ class Main extends Component
     }
 
     public function save_new() {
-        Competition::create([
-            "name"=>$this->new_name,
-            "year"=>$this->new_year,
-            "theme"=>$this->new_theme,
-            "p_correct"=>$this->new_p_correct,
-            "p_empty"=>$this->new_p_empty,
-            "p_incorrect"=>$this->new_p_incorrect
-        ]);
+        try {
+            Competition::create([
+                "name" => $this->new_name,
+                "year" => $this->new_year,
+                "theme" => $this->new_theme,
+                "p_correct" => $this->new_p_correct,
+                "p_empty" => $this->new_p_empty,
+                "p_incorrect" => $this->new_p_incorrect
+            ]);
+        } catch (\Exception $e) {
+            $this->js('showSnackBar("A verseny mentése nem sikerült. Ellenőrizze, hogy a név és év kombinációja egyedi -e!", 4000);');
+            return false;
+        }
+        return true;
     }
 
     #[Computed()]

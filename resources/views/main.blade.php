@@ -70,10 +70,10 @@
 @script
 <script>
     $js('newCompetition', ()=>{
-        $wire.save_new().then(()=>{
-            showSnackBar("Sikeres mentés.", 2500);
-        }).catch(()=>{
-            showSnackBar("Hiba történt.", 2500);
+        $wire.save_new().then(($r)=>{
+            if ($r === true) {
+                showSnackBar("Sikeres mentés.", 2500);
+            }
         });
     })
 </script>
