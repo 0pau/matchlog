@@ -56,7 +56,9 @@ class CompetitionInfoPage extends Component
     {
         $this->id = $id;
         $this->competition = Competition::find($id);
-        $this->refreshRounds();
+        if ($this->competition != null) {
+            $this->refreshRounds();
+        }
     }
 
     public function render()

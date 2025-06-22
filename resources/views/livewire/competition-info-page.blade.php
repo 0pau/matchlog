@@ -11,7 +11,6 @@
                         <i class="bi bi-three-dots"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Szerkesztés</a></li>
                         <li><a class="dropdown-item" wire:click="delete">Törlés</a></li>
                     </ul>
                 </div>
